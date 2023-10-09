@@ -21,7 +21,9 @@ struct CoreView: View {
                 }
 
             case .main:
-                Text("Hello")
+                CaseLet(/Reducer.State.main, action: Reducer.Action.main) { store in
+                    MainView(store: store)
+                }
             }
         }
     }

@@ -9,8 +9,11 @@ let package = Package(
         .iOS(.v17),
     ],
     products: [
-        .library(name: "SignIn", targets: ["SignIn"]),
+        .library(name: "Account", targets: ["Account"]),
         .library(name: "Kantacky", targets: ["Kantacky"]),
+        .library(name: "Models", targets: ["Models"]),
+        .library(name: "SignIn", targets: ["SignIn"]),
+        .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", .upToNextMajor(from: "1.0.0")),
@@ -18,8 +21,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SignIn",
+            name: "Account",
             dependencies: [
+                "Models",
+                "UserDefaultsClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],
@@ -28,6 +33,7 @@ let package = Package(
         .target(
             name: "Kantacky",
             dependencies: [
+                "Account",
                 "SignIn",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
@@ -37,5 +43,25 @@ let package = Package(
             name: "KantackyTests",
             dependencies: ["Kantacky"]
         ),
+        .target(
+            name: "Models",
+            dependencies: [],
+            plugins: []
+        ),
+        .target(
+            name: "SignIn",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+            plugins: []
+        ),
+        .target(
+            name: "UserDefaultsClient",
+            dependencies: [
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+            plugins: []
+        )
     ]
 )

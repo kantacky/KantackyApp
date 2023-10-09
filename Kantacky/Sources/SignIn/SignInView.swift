@@ -13,6 +13,9 @@ public struct SignInView: View {
 
     public var body: some View {
         VStack(spacing: 32) {
+            Spacer()
+                .frame(maxHeight: 48)
+
             Image(.kantacky)
                 .resizable()
                 .scaledToFit()
@@ -22,17 +25,37 @@ public struct SignInView: View {
                 .font(.title)
                 .bold()
 
-            UsernameTextField(
-                text: self.viewStore.binding(
-                    get: \.username,
-                    send: Reducer.Action.onUsernameChanged
-                ),
-                placeholder: "Username"
+            SignInTextField(
+                text: self.viewStore.$username,
+                placeholder: "Username",
+                field: .username,
+                disabled: self.viewStore.isLoading
             )
 
-            SignInButton("Sign In") {
-                self.viewStore.send(.onSignInButtonTapped)
+            if self.viewStore.isPasswordFieldShown {
+                SignInTextField(
+                    text: self.viewStore.$password,
+                    placeholder: "Password",
+                    field: .password,
+                    disabled: self.viewStore.isLoading
+                )
             }
+
+            if self.viewStore.isLoading {
+                ProgressView()
+            } else {
+                if self.viewStore.isPasswordFieldShown {
+                    SignInButton("Sign In", disabled: self.viewStore.isDisabledSignInButton) {
+                        self.viewStore.send(.onSignInButtonTapped, animation: .smooth(duration: 0.5))
+                    }
+                } else {
+                    SignInButton("Continue", disabled: self.viewStore.isDisabledContinueButton) {
+                        self.viewStore.send(.onContinueButtonTapped, animation: .smooth(duration: 0.5))
+                    }
+                }
+            }
+
+            Spacer()
         }
         .padding(.horizontal)
     }
