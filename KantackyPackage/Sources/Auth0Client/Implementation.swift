@@ -8,6 +8,7 @@ enum Implementation {
         let clientId: String = configurations.value(forKey: "ClientId") as! String
         let domain: String = configurations.value(forKey: "Domain") as! String
 
+        // Start Web Session
         let credentials: Credentials = try await Auth0.webAuth(clientId: clientId, domain: domain)
             .scope("openid profile email offline_access")
             .start()
@@ -28,7 +29,8 @@ enum Implementation {
         let clientId: String = configurations.value(forKey: "ClientId") as! String
         let domain: String = configurations.value(forKey: "Domain") as! String
 
-//        try await Auth0.webAuth(clientId: clientId, domain: domain).clearSession()
+        // Clear Web Session
+        try await Auth0.webAuth(clientId: clientId, domain: domain).clearSession()
 
         let authentication: Authentication = Auth0.authentication(clientId: clientId, domain: domain)
         let credentialsManager: CredentialsManager = Auth0.CredentialsManager(authentication: authentication)
