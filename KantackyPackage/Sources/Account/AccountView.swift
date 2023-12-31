@@ -17,7 +17,7 @@ public struct AccountView: View {
     public var body: some View {
         NavigationStack {
             Form {
-                Section() {
+                Section {
                     HStack(spacing: 16) {
                         LazyImage(url: self.viewStore.user.avator) { state in
                             if let image = state.image {
