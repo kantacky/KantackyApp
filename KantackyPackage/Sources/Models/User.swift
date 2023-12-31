@@ -46,7 +46,6 @@ public extension User {
     }
 }
 
-#if DEBUG
 public extension User {
     static let example0: Self = .init(
         id: UUID().uuidString,
@@ -56,4 +55,3 @@ public extension User {
         avator: .init(string: "https://s.gravatar.com/avatar/77fbd83c506bf1d9de31bbb843d64e53?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fj.png")!
     )
 }
-#endif
