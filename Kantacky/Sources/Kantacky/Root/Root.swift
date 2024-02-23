@@ -52,7 +52,6 @@ struct Root {
 
             case .getCredentialsResult(.failure(_)):
                 state = .signIn(.init())
-
                 return .none
 
             case .core(.account(.signOutResult(.success(_)))):

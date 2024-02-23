@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo $GENERATIVE_AI_INFO > /Volumes/workspace/repository/KantackyPackage/Sources/GenerativeAIClient/GenerativeAI-Info.plist
+echo $GENERATIVE_AI_INFO > /Volumes/workspace/repository/Kantacky/Sources/GenerativeAIClient/GenerativeAI-Info.plist
