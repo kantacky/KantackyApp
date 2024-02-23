@@ -1,12 +1,7 @@
 import XCTest
-@testable import Kantacky
+@testable import KantackyPackage
 
+@MainActor
 final class KantackyTests: XCTestCase {
-    func testExample() throws {
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
-
-        // Defining Test Cases and Test Methods
-        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
-    }
+    func test() throws {}
 }

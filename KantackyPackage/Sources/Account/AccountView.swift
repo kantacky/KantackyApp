@@ -46,30 +46,6 @@ public struct AccountView: View {
                     }
                 }
 
-                Section(header: Label("Edit Info", systemImage: "person.fill")) {
-                    NavigationLink {
-                        Form {
-                            TextField("Name", text: self.viewStore.$user.name)
-                        }
-                    } label: {
-                        LabeledContent("Name", value: self.viewStore.user.name)
-                    }
-                    .onSubmit {
-                        self.viewStore.send(.onNameChanged)
-                    }
-
-                    NavigationLink {
-                        Form {
-                            TextField("Email", text: self.viewStore.$user.email)
-                        }
-                    } label: {
-                        LabeledContent("Email", value: "\(self.viewStore.user.email)\(self.viewStore.user.isEmailVerified ? "" : " - Not Verified")")
-                    }
-                    .onSubmit {
-                        self.viewStore.send(.onEmailChanged)
-                    }
-                }
-
                 Section {
                     Button(role: .destructive) {
                         self.viewStore.send(.onSignOutButtonTapped)

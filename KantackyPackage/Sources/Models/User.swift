@@ -25,7 +25,7 @@ public struct User: Identifiable, Equatable {
 }
 
 public extension User {
-    static func fromAuth0Credentials(_ credentials: Credentials) throws -> Self {
+    static func from(_ credentials: Credentials) throws -> Self {
         guard let jwt = try? decode(jwt: credentials.idToken),
               let id = jwt["sub"].string,
               let name = jwt["name"].string,

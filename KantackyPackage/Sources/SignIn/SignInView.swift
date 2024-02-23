@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import Resources
 import SwiftUI
 
 public struct SignInView: View {
@@ -18,7 +19,7 @@ public struct SignInView: View {
             Spacer()
                 .frame(maxHeight: 48)
 
-            Image(.kantacky)
+            Image.kantacky
                 .resizable()
                 .scaledToFit()
                 .frame(width: 64)
@@ -27,9 +28,15 @@ public struct SignInView: View {
                 .font(.title)
                 .bold()
 
-            SignInButton("Continue") {
+            Button {
                 self.viewStore.send(.onContinueButtonTapped, animation: .smooth(duration: 0.5))
+            } label: {
+                Text("Continue")
+                    .frame(width: 128, height: 48)
             }
+            .foregroundStyle(.white)
+            .background(.blue)
+            .clipShape(Capsule())
 
             Spacer()
         }

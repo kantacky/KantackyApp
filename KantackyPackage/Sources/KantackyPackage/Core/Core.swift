@@ -3,7 +3,7 @@ import ComposableArchitecture
 import Models
 
 @Reducer
-struct MainReducer {
+struct Core {
     // MARK: - State
     struct State: Equatable {
         var account: AccountReducer.State
@@ -20,11 +20,9 @@ struct MainReducer {
 
     // MARK: - Dependencies
 
-    init() {}
-
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
-        Scope(state: \.account, action: /Action.account) {
+        Scope(state: \.account, action: \.account) {
             AccountReducer()
         }
 

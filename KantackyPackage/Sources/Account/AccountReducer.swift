@@ -2,7 +2,6 @@ import Auth0Client
 import ComposableArchitecture
 import Dependencies
 import Models
-import UserDefaultsClient
 
 @Reducer
 public struct AccountReducer {
@@ -19,15 +18,12 @@ public struct AccountReducer {
     public enum Action: BindableAction {
         case binding(BindingAction<State>)
         case onPullToRefresh
-        case onNameChanged
-        case onEmailChanged
         case onSignOutButtonTapped
         case signOutResult(TaskResult<Void>)
     }
 
     // MARK: - Dependencies
-    @Dependency(\.auth0Client)
-    private var auth0Client: Auth0Client
+    @Dependency(Auth0Client.self) private var auth0Client: Auth0Client
 
     public init() {}
 
@@ -39,12 +35,6 @@ public struct AccountReducer {
                 return .none
 
             case .onPullToRefresh:
-                return .none
-
-            case .onNameChanged:
-                return .none
-
-            case .onEmailChanged:
                 return .none
 
             case .onSignOutButtonTapped:

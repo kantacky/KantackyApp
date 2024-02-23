@@ -5,7 +5,7 @@ import Models
 import SignIn
 
 @Reducer
-struct CoreReducer {
+struct Root {
     // MARK: - State
     struct State: Equatable {
         var scene: Scene
@@ -19,7 +19,7 @@ struct CoreReducer {
         enum Scene: Equatable {
             case launch
             case signIn(SignInReducer.State)
-            case main(MainReducer.State)
+            case core(Core.State)
         }
     }
 
@@ -29,16 +29,13 @@ struct CoreReducer {
         case onAppear
         case getCredentialsResult(TaskResult<Credentials>)
         case signIn(SignInReducer.Action)
-        case main(MainReducer.Action)
+        case core(Core.Action)
 
         enum Alert: Equatable {}
     }
 
     // MARK: - Dependencies
-    @Dependency(\.auth0Client)
-    private var auth0Client: Auth0Client
-
-    init() {}
+    @Dependency(Auth0Client.self) private var auth0Client: Auth0Client
 
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
@@ -46,8 +43,8 @@ struct CoreReducer {
             Scope(state: \.signIn, action: \.signIn) {
                 SignInReducer()
             }
-            Scope(state: \.main, action: \.main) {
-                MainReducer()
+            Scope(state: \.core, action: \.core) {
+                Core()
             }
         }
 
@@ -65,8 +62,8 @@ struct CoreReducer {
 
             case let .getCredentialsResult(.success(credentials)):
                 do {
-                    let user: User = try User.fromAuth0Credentials(credentials)
-                    state.scene = .main(.init(user: user))
+                    let user: User = try User.from(credentials)
+                    state.scene = .core(.init(user: user))
                 } catch {
                     state.scene = .signIn(.init())
                     return .none
@@ -80,26 +77,26 @@ struct CoreReducer {
 
             case let .signIn(.authResult(.success(credentials))):
                 do {
-                    let user: User = try User.fromAuth0Credentials(credentials)
-                    state.scene = .main(.init(user: user))
+                    let user: User = try User.from(credentials)
+                    state.scene = .core(.init(user: user))
                 } catch {
                     state.alert = .init(title: { .init(error.localizedDescription) })
                     return .none
                 }
                 return .none
 
-            case .main(.account(.signOutResult(.success(_)))):
+            case .core(.account(.signOutResult(.success(_)))):
                 state.scene = .signIn(.init())
                 return .none
 
-            case let .main(.account(.signOutResult(.failure(error)))):
+            case let .core(.account(.signOutResult(.failure(error)))):
                 state.alert = .init(title: { .init(error.localizedDescription) })
                 return .none
 
             case .signIn:
                 return .none
 
-            case .main:
+            case .core:
                 return .none
             }
         }
