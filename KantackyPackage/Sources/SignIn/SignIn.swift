@@ -4,8 +4,9 @@ import ComposableArchitecture
 import JWTDecode
 
 @Reducer
-public struct SignInReducer {
+public struct SignIn {
     // MARK: - State
+    @ObservableState
     public struct State: Equatable {
         public init() {}
     }
@@ -13,7 +14,7 @@ public struct SignInReducer {
     // MARK: - Action
     public enum Action {
         case onContinueButtonTapped
-        case authResult(TaskResult<Credentials>)
+        case authResult(Result<Credentials, Error>)
     }
 
     // MARK: - Dependencies
@@ -27,7 +28,7 @@ public struct SignInReducer {
             switch action {
             case .onContinueButtonTapped:
                 return .run { send in
-                    await send(.authResult(TaskResult {
+                    await send(.authResult(Result {
                         try await self.auth0Client.signIn()
                     }))
                 }

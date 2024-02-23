@@ -1,37 +1,29 @@
 import Auth0
 import Auth0Client
 import ComposableArchitecture
-import Models
+import Data
 import SignIn
 
 @Reducer
 struct Root {
     // MARK: - State
-    struct State: Equatable {
-        var scene: Scene
-        @PresentationState var alert: AlertState<Action.Alert>?
+    @ObservableState
+    enum State: Equatable {
+        case launch
+        case signIn(SignIn.State)
+        case core(Core.State)
 
         init() {
-            self.scene = .launch
-        }
-
-        @CasePathable
-        enum Scene: Equatable {
-            case launch
-            case signIn(SignInReducer.State)
-            case core(Core.State)
+            self = .launch
         }
     }
 
     // MARK: - Action
     enum Action {
-        case alert(PresentationAction<Alert>)
         case onAppear
         case getCredentialsResult(TaskResult<Credentials>)
-        case signIn(SignInReducer.Action)
+        case signIn(SignIn.Action)
         case core(Core.Action)
-
-        enum Alert: Equatable {}
     }
 
     // MARK: - Dependencies
@@ -39,20 +31,8 @@ struct Root {
 
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
-        Scope(state: \.scene, action: \.self) {
-            Scope(state: \.signIn, action: \.signIn) {
-                SignInReducer()
-            }
-            Scope(state: \.core, action: \.core) {
-                Core()
-            }
-        }
-
         Reduce { state, action in
             switch action {
-            case .alert:
-                return .none
-
             case .onAppear:
                 return .run { send in
                     await send(.getCredentialsResult(TaskResult {
@@ -60,37 +40,23 @@ struct Root {
                     }))
                 }
 
-            case let .getCredentialsResult(.success(credentials)):
+            case .getCredentialsResult(.success(let credentials)):
                 do {
-                    let user: User = try User.from(credentials)
-                    state.scene = .core(.init(user: user))
+                    let user = try User.from(credentials)
+                    state = .core(.init(user: user))
                 } catch {
-                    state.scene = .signIn(.init())
+                    state = .signIn(.init())
                     return .none
                 }
                 return .none
 
             case .getCredentialsResult(.failure(_)):
-                state.scene = .signIn(.init())
+                state = .signIn(.init())
 
-                return .none
-
-            case let .signIn(.authResult(.success(credentials))):
-                do {
-                    let user: User = try User.from(credentials)
-                    state.scene = .core(.init(user: user))
-                } catch {
-                    state.alert = .init(title: { .init(error.localizedDescription) })
-                    return .none
-                }
                 return .none
 
             case .core(.account(.signOutResult(.success(_)))):
-                state.scene = .signIn(.init())
-                return .none
-
-            case let .core(.account(.signOutResult(.failure(error)))):
-                state.alert = .init(title: { .init(error.localizedDescription) })
+                state = .signIn(.init())
                 return .none
 
             case .signIn:
@@ -100,6 +66,5 @@ struct Root {
                 return .none
             }
         }
-        .ifLet(\.$alert, action: \.alert)
     }
 }

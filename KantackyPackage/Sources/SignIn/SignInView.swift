@@ -3,15 +3,10 @@ import Resources
 import SwiftUI
 
 public struct SignInView: View {
-    public typealias Reducer = SignInReducer
-    private let store: StoreOf<Reducer>
-    @StateObject private var viewStore: ViewStoreOf<Reducer>
+    private let store: StoreOf<SignIn>
 
-    public init(store: StoreOf<Reducer>) {
+    public init(store: StoreOf<SignIn>) {
         self.store = store
-        self._viewStore = .init(
-            wrappedValue: ViewStore(store, observe: { $0 })
-        )
     }
 
     public var body: some View {
@@ -29,7 +24,7 @@ public struct SignInView: View {
                 .bold()
 
             Button {
-                self.viewStore.send(.onContinueButtonTapped, animation: .smooth(duration: 0.5))
+                store.send(.onContinueButtonTapped, animation: .smooth(duration: 0.5))
             } label: {
                 Text("Continue")
                     .frame(width: 128, height: 48)
@@ -46,8 +41,8 @@ public struct SignInView: View {
 
 #Preview {
     SignInView(store: Store(
-        initialState: SignInView.Reducer.State()
+        initialState: SignIn.State()
     ) {
-        SignInView.Reducer()
+        SignIn()
     })
 }

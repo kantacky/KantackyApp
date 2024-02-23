@@ -1,13 +1,14 @@
 import Auth0Client
 import ComposableArchitecture
+import Data
 import Dependencies
-import Models
 
 @Reducer
-public struct AccountReducer {
+public struct Account {
     // MARK: - State
+    @ObservableState
     public struct State: Equatable {
-        @BindingState var user: User
+        var user: User
 
         public init(user: User) {
             self.user = user

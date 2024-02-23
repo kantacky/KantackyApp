@@ -3,15 +3,10 @@ import NukeUI
 import SwiftUI
 
 public struct AccountView: View {
-    public typealias Reducer = AccountReducer
-    private let store: StoreOf<Reducer>
-    @StateObject private var viewStore: ViewStoreOf<Reducer>
+    @Bindable private var store: StoreOf<Account>
 
-    public init(store: StoreOf<Reducer>) {
+    public init(store: StoreOf<Account>) {
         self.store = store
-        self._viewStore = .init(
-            wrappedValue: ViewStore(store, observe: { $0 })
-        )
     }
 
     public var body: some View {
@@ -19,7 +14,7 @@ public struct AccountView: View {
             Form {
                 Section {
                     HStack(spacing: 16) {
-                        LazyImage(url: self.viewStore.user.avator) { state in
+                        LazyImage(url: store.user.avator) { state in
                             if let image = state.image {
                                 image
                                     .resizable()
@@ -38,9 +33,9 @@ public struct AccountView: View {
                         }
 
                         VStack(alignment: .leading) {
-                            Text(self.viewStore.user.name)
+                            Text(store.user.name)
                                 .font(.title3)
-                            Text(self.viewStore.user.email)
+                            Text(store.user.email)
                                 .font(.caption)
                         }
                     }
@@ -48,7 +43,7 @@ public struct AccountView: View {
 
                 Section {
                     Button(role: .destructive) {
-                        self.viewStore.send(.onSignOutButtonTapped)
+                        store.send(.onSignOutButtonTapped)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.portrait.and.arrow.right")
@@ -58,7 +53,7 @@ public struct AccountView: View {
                 }
             }
             .refreshable {
-                self.viewStore.send(.onPullToRefresh)
+                store.send(.onPullToRefresh)
             }
             .navigationTitle("Account")
         }
@@ -67,8 +62,8 @@ public struct AccountView: View {
 
 #Preview {
     AccountView(store: Store(
-        initialState: AccountView.Reducer.State(user: .example0)
+        initialState: Account.State(user: .example0)
     ) {
-        AccountView.Reducer()
+        Account()
     })
 }
