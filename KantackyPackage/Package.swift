@@ -7,6 +7,10 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
+        .macOS(.v14),
+        .watchOS(.v10),
+        .tvOS(.v17),
+        .visionOS(.v1),
     ],
     products: [
         .library(name: "Account", targets: ["Account"]),
