@@ -117,19 +117,35 @@ public struct ChatView: View {
             .navigationTitle("Chat with Gemini")
             .toolbar {
                 if isFocused {
+#if !os(macOS)
                     ToolbarItem(placement: .topBarLeading) {
                         Button("Cancel") {
                             isFocused = false
                         }
                     }
+#else
+                    ToolbarItem {
+                        Button("Cancel") {
+                            isFocused = false
+                        }
+                    }
+#endif
                 }
 
                 if !store.history.isEmpty {
+#if !os(macOS)
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("Clear") {
                             store.send(.onClearButtonTapped)
                         }
                     }
+#else
+                    ToolbarItem {
+                        Button("Clear") {
+                            store.send(.onClearButtonTapped)
+                        }
+                    }
+#endif
                 }
             }
         }

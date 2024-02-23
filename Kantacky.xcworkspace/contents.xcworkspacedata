@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:KantackyPackage">
+      location = "group:Kantacky">
    </FileRef>
    <FileRef
-      location = "group:Kantacky/Kantacky.xcodeproj">
+      location = "group:App/App.xcodeproj">
    </FileRef>
 </Workspace>

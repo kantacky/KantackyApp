@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "KantackyPackage",
+    name: "Kantacky",
     defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
@@ -15,7 +15,7 @@ let package = Package(
     products: [
         .library(name: "Account", targets: ["Account"]),
         .library(name: "Chat", targets: ["Chat"]),
-        .library(name: "KantackyPackage", targets: ["KantackyPackage"]),
+        .library(name: "Kantacky", targets: ["Kantacky"]),
         .library(name: "Log4k", targets: ["Log4k"]),
         .library(name: "SignIn", targets: ["SignIn"]),
     ],
@@ -38,6 +38,13 @@ let package = Package(
                 .nukeUI,
             ]
         ),
+        .testTarget(
+            name: "AccountTests",
+            dependencies: [
+                .account,
+                .composableArchitecture,
+            ]
+        ),
         .target(
             name: "Auth0Client",
             dependencies: [
@@ -58,6 +65,13 @@ let package = Package(
                 .generativeAI
             ]
         ),
+        .testTarget(
+            name: "ChatTests",
+            dependencies: [
+                .chat,
+                .composableArchitecture,
+            ]
+        ),
         .target(
             name: "Data",
             dependencies: [
@@ -75,7 +89,7 @@ let package = Package(
             ]
         ),
         .target(
-            name: "KantackyPackage",
+            name: "Kantacky",
             dependencies: [
                 .account,
                 .chat,
@@ -86,8 +100,11 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "KantackyPackageTests",
-            dependencies: [.kantackyPackage]
+            name: "KantackyTests",
+            dependencies: [
+                .kantacky,
+                .composableArchitecture,
+            ]
         ),
         .target(
             name: "Log4k",
@@ -98,6 +115,13 @@ let package = Package(
                 .dependencies,
             ]
         ),
+        .testTarget(
+            name: "Log4kTests",
+            dependencies: [
+                .log4k,
+                .composableArchitecture,
+            ]
+        ),
         .target(name: "Resources"),
         .target(
             name: "SignIn",
@@ -106,6 +130,13 @@ let package = Package(
                 .resources,
                 .composableArchitecture,
                 .dependencies,
+            ]
+        ),
+        .testTarget(
+            name: "SignInTests",
+            dependencies: [
+                .signIn,
+                .composableArchitecture,
             ]
         ),
         .target(
@@ -130,7 +161,7 @@ extension Target.Dependency {
     static let chat: Self = "Chat"
     static let data: Self = "Data"
     static let generativeAIClient: Self = "GenerativeAIClient"
-    static let kantackyPackage: Self = "KantackyPackage"
+    static let kantacky: Self = "Kantacky"
     static let log4k: Self = "Log4k"
     static let resources: Self = "Resources"
     static let signIn: Self = "SignIn"
