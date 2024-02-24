@@ -32,11 +32,11 @@ let package = Package(
             name: "Account",
             dependencies: [
                 .auth0Client,
-                .data,
-                .resources,
                 .composableArchitecture,
+                .data,
                 .dependencies,
                 .nukeUI,
+                .resources,
             ]
         ),
         .testTarget(
@@ -70,8 +70,8 @@ let package = Package(
         .testTarget(
             name: "CoreTests",
             dependencies: [
-                .core,
                 .composableArchitecture,
+                .core,
             ]
         ),
         .target(
@@ -90,41 +90,41 @@ let package = Package(
         .testTarget(
             name: "KantackyTests",
             dependencies: [
-                .kantacky,
                 .composableArchitecture,
+                .kantacky,
             ]
         ),
         .target(
             name: "Launch",
             dependencies: [
+                .auth0,
                 .auth0Client,
+                .composableArchitecture,
                 .data,
                 .resources,
-                .auth0,
-                .composableArchitecture,
             ]
         ),
         .testTarget(
             name: "LaunchTests",
             dependencies: [
-                .launch,
                 .composableArchitecture,
+                .launch,
             ]
         ),
         .target(
             name: "Log4k",
             dependencies: [
-                .data,
-                .swiftDataClient,
                 .composableArchitecture,
+                .data,
                 .dependencies,
+                .swiftDataClient,
             ]
         ),
         .testTarget(
             name: "Log4kTests",
             dependencies: [
-                .log4k,
                 .composableArchitecture,
+                .log4k,
             ]
         ),
         .target(name: "Resources"),
@@ -141,24 +141,25 @@ let package = Package(
         .testTarget(
             name: "RootTests",
             dependencies: [
-                .root,
                 .composableArchitecture,
+                .root,
             ]
         ),
         .target(
             name: "SignIn",
             dependencies: [
                 .auth0Client,
-                .resources,
                 .composableArchitecture,
+                .data,
                 .dependencies,
+                .resources,
             ]
         ),
         .testTarget(
             name: "SignInTests",
             dependencies: [
-                .signIn,
                 .composableArchitecture,
+                .signIn,
             ]
         ),
         .target(
