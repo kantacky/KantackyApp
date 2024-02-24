@@ -29,8 +29,10 @@ public struct DetailView: View {
                 }
             }
         }
-        .navigationTitle("")
+        .navigationTitle(DateFormatter.dateFormatter.string(from: store.item.date))
+#if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
+#endif
         .toolbar {
 #if !os(macOS)
             ToolbarItem(placement: .navigationBarTrailing) {

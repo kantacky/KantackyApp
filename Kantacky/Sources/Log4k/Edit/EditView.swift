@@ -34,7 +34,9 @@ public struct EditView: View {
             }
         }
         .navigationTitle("New Log4k")
+#if !os(macOS)
         .navigationBarTitleDisplayMode(.inline)
+#endif
         .toolbar {
 #if !os(macOS)
             ToolbarItem(placement: .navigationBarLeading) {
