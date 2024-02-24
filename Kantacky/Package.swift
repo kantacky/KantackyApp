@@ -14,9 +14,11 @@ let package = Package(
     ],
     products: [
         .library(name: "Account", targets: ["Account"]),
-        .library(name: "Chat", targets: ["Chat"]),
+        .library(name: "Core", targets: ["Core"]),
         .library(name: "Kantacky", targets: ["Kantacky"]),
+        .library(name: "Launch", targets: ["Launch"]),
         .library(name: "Log4k", targets: ["Log4k"]),
+        .library(name: "Root", targets: ["Root"]),
         .library(name: "SignIn", targets: ["SignIn"]),
     ],
     dependencies: [
@@ -24,7 +26,6 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/auth0/Auth0.swift.git", .upToNextMajor(from: "2.0.0")),
         .package(url: "https://github.com/kean/Nuke.git", .upToNextMajor(from: "12.0.0")),
-        .package(url: "https://github.com/google/generative-ai-swift.git", .upToNextMajor(from: "0.1.0")),
     ],
     targets: [
         .target(
@@ -56,19 +57,20 @@ let package = Package(
             ]
         ),
         .target(
-            name: "Chat",
+            name: "Core",
             dependencies: [
-                .resources,
+                .account,
                 .composableArchitecture,
                 .dependencies,
-                .generativeAIClient,
-                .generativeAI
+                .data,
+                .log4k,
+                .swiftDataClient
             ]
         ),
         .testTarget(
-            name: "ChatTests",
+            name: "CoreTests",
             dependencies: [
-                .chat,
+                .core,
                 .composableArchitecture,
             ]
         ),
@@ -79,30 +81,33 @@ let package = Package(
             ]
         ),
         .target(
-            name: "GenerativeAIClient",
-            dependencies: [
-                .dependencies,
-                .generativeAI,
-            ],
-            resources: [
-                .process("./GenerativeAI-Info.plist"),
-            ]
-        ),
-        .target(
             name: "Kantacky",
             dependencies: [
-                .account,
-                .chat,
-                .log4k,
-                .signIn,
-                .swiftDataClient,
                 .composableArchitecture,
+                .root,
             ]
         ),
         .testTarget(
             name: "KantackyTests",
             dependencies: [
                 .kantacky,
+                .composableArchitecture,
+            ]
+        ),
+        .target(
+            name: "Launch",
+            dependencies: [
+                .auth0Client,
+                .data,
+                .resources,
+                .auth0,
+                .composableArchitecture,
+            ]
+        ),
+        .testTarget(
+            name: "LaunchTests",
+            dependencies: [
+                .launch,
                 .composableArchitecture,
             ]
         ),
@@ -123,6 +128,23 @@ let package = Package(
             ]
         ),
         .target(name: "Resources"),
+        .target(
+            name: "Root",
+            dependencies: [
+                .composableArchitecture,
+                .core,
+                .data,
+                .launch,
+                .signIn
+            ]
+        ),
+        .testTarget(
+            name: "RootTests",
+            dependencies: [
+                .root,
+                .composableArchitecture,
+            ]
+        ),
         .target(
             name: "SignIn",
             dependencies: [
@@ -158,12 +180,14 @@ let package = Package(
 extension Target.Dependency {
     static let account: Self = "Account"
     static let auth0Client: Self = "Auth0Client"
-    static let chat: Self = "Chat"
+    static let core: Self = "Core"
     static let data: Self = "Data"
     static let generativeAIClient: Self = "GenerativeAIClient"
     static let kantacky: Self = "Kantacky"
+    static let launch: Self = "Launch"
     static let log4k: Self = "Log4k"
     static let resources: Self = "Resources"
+    static let root: Self = "Root"
     static let signIn: Self = "SignIn"
     static let swiftDataClient: Self = "SwiftDataClient"
     static let userDefaultsClient: Self = "UserDefaultsClient"
@@ -172,5 +196,4 @@ extension Target.Dependency {
     static let composableArchitecture: Self = .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
     static let dependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
     static let nukeUI: Self = .product(name: "NukeUI", package: "Nuke")
-    static let generativeAI: Self = .product(name: "GoogleGenerativeAI", package: "generative-ai-swift")
 }

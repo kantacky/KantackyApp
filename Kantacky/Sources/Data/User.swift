@@ -2,7 +2,7 @@ import Auth0
 import Foundation
 import JWTDecode
 
-public struct User: Identifiable, Equatable {
+public struct User: Identifiable {
     public var id: String
     public var name: String
     public var email: String

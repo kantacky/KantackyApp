@@ -3,7 +3,7 @@ import Resources
 import SwiftUI
 
 public struct SignInView: View {
-    private let store: StoreOf<SignIn>
+    @Bindable private var store: StoreOf<SignIn>
 
     public init(store: StoreOf<SignIn>) {
         self.store = store
@@ -23,19 +23,15 @@ public struct SignInView: View {
                 .font(.title)
                 .bold()
 
-            Button {
-                store.send(.onContinueButtonTapped, animation: .smooth(duration: 0.5))
-            } label: {
-                Text("Continue")
-                    .frame(width: 128, height: 48)
+            Button("Continue") {
+                store.send(.continueButtonTapped)
             }
-            .foregroundStyle(.white)
-            .background(.blue)
-            .clipShape(Capsule())
+            .buttonStyle(.borderedProminent)
 
             Spacer()
         }
         .padding(.horizontal)
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 }
 

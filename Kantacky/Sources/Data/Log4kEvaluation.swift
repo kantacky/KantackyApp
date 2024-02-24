@@ -1,18 +1,18 @@
 import Foundation
+import SwiftData
 
 public struct Log4kEvaluation: Codable {
-    public var happy: Int = 0
-    public var satisfied: Int = 0
-    public var exauhsted: Int = 0
+    public var happy: Float = 0
+    public var satisfied: Float = 0
+    public var exhausted: Float = 0
 
     public init(
-        happy: Int,
-        satisfied: Int,
-        exauhsted: Int
+        happy: Float,
+        satisfied: Float,
+        exhausted: Float
     ) {
         self.happy = happy
         self.satisfied = satisfied
-        self.exauhsted = exauhsted
+        self.exhausted = exhausted
     }
 }
-

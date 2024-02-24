@@ -1,10 +1,10 @@
 import ComposableArchitecture
 import XCTest
 
-@testable import Chat
+@testable import Core
 
 @MainActor
-final class ChatTests: XCTestCase {
+final class CoreTests: XCTestCase {
     func test() throws {
     }
 }

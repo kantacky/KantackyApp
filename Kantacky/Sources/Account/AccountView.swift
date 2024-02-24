@@ -43,7 +43,7 @@ public struct AccountView: View {
 
                 Section {
                     Button(role: .destructive) {
-                        store.send(.onSignOutButtonTapped)
+                        store.send(.signOutButtonTapped)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.portrait.and.arrow.right")
@@ -52,11 +52,9 @@ public struct AccountView: View {
                     }
                 }
             }
-            .refreshable {
-                store.send(.onPullToRefresh)
-            }
             .navigationTitle("Account")
         }
+        .alert($store.scope(state: \.alert, action: \.alert))
     }
 }
 

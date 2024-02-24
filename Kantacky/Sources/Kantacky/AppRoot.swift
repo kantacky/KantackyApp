@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import Root
 import SwiftUI
 
 public struct AppRoot: App {

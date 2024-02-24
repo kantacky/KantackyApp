@@ -1,20 +1,28 @@
 import Auth0
 import Auth0Client
 import ComposableArchitecture
+import Data
 import JWTDecode
 
 @Reducer
 public struct SignIn {
     // MARK: - State
     @ObservableState
-    public struct State: Equatable {
+    public struct State {
+        @Presents var alert: AlertState<Action.Alert>?
+
         public init() {}
     }
 
     // MARK: - Action
-    public enum Action {
-        case onContinueButtonTapped
-        case authResult(Result<Credentials, Error>)
+    public enum Action: BindableAction {
+        case alert(PresentationAction<Alert>)
+        case binding(BindingAction<State>)
+        case onAppear
+        case continueButtonTapped
+        case signIn(Result<User, Error>)
+
+        public enum Alert {}
     }
 
     // MARK: - Dependencies
@@ -24,21 +32,34 @@ public struct SignIn {
 
     // MARK: - Reducer
     public var body: some ReducerOf<Self> {
+        BindingReducer()
+
         Reduce { state, action in
             switch action {
-            case .onContinueButtonTapped:
+            case .alert:
+                return .none
+
+            case .binding:
+                return .none
+
+            case .onAppear:
+                return .none
+
+            case .continueButtonTapped:
                 return .run { send in
-                    await send(.authResult(Result {
-                        try await self.auth0Client.signIn()
+                    await send(.signIn(Result {
+                        let credentials = try await self.auth0Client.signIn()
+                        return try User.from(credentials)
                     }))
                 }
 
-            case .authResult(.success(_)):
+            case .signIn(.success(_)):
                 return .none
 
-            case .authResult(.failure(_)):
+            case .signIn(.failure(_)):
                 return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 }

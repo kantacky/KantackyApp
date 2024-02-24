@@ -7,7 +7,8 @@ import Dependencies
 public struct Account {
     // MARK: - State
     @ObservableState
-    public struct State: Equatable {
+    public struct State {
+        @Presents var alert: AlertState<Action.Alert>?
         var user: User
 
         public init(user: User) {
@@ -17,42 +18,49 @@ public struct Account {
 
     // MARK: - Action
     public enum Action: BindableAction {
+        case alert(PresentationAction<Alert>)
         case binding(BindingAction<State>)
-        case onPullToRefresh
-        case onSignOutButtonTapped
-        case signOutResult(TaskResult<Void>)
+        case signOutButtonTapped
+        case signOut(Result<Void, Error>)
+
+        public enum Alert {}
     }
 
     // MARK: - Dependencies
-    @Dependency(Auth0Client.self) private var auth0Client: Auth0Client
+    @Dependency(Auth0Client.self) private var auth0Client
 
     public init() {}
 
     // MARK: - Reducer
     public var body: some ReducerOf<Self> {
+        BindingReducer()
+
         Reduce { state, action in
             switch action {
+            case .alert:
+                return .none
+
             case .binding:
                 return .none
 
-            case .onPullToRefresh:
-                return .none
-
-            case .onSignOutButtonTapped:
+            case .signOutButtonTapped:
                 return .run { send in
-                    await send(.signOutResult(TaskResult {
+                    await send(.signOut(Result {
                         try await self.auth0Client.signOut()
                     }))
                 }
 
-            case .signOutResult(.success):
+            case .signOut(.success):
                 return .none
 
-            case .signOutResult(.failure(_)):
+            case .signOut(.failure(let error)):
+                state.alert = AlertState(
+                    title: TextState("Something Went Wrong while Signing Out."),
+                    message: TextState(error.localizedDescription)
+                )
                 return .none
             }
         }
-
-        BindingReducer()
+        .ifLet(\.$alert, action: \.alert)
     }
 }

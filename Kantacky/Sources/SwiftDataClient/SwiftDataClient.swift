@@ -1,11 +1,11 @@
 import SwiftData
 
 public struct SwiftDataClient {
-    public var context: @Sendable () throws -> ModelContext
+    public var container: ModelContainer
 
     public init(
-        context: @escaping @Sendable () throws -> ModelContext
+        container: ModelContainer
     ) {
-        self.context = context
+        self.container = container
     }
 }

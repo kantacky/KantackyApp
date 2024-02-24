@@ -4,7 +4,8 @@ import SwiftData
 import SwiftUI
 
 public struct Log4kView: View {
-    private let store: StoreOf<Log4k>
+    @Environment(\.modelContext) private var context
+    @Bindable private var store: StoreOf<Log4k>
 
     public init(store: StoreOf<Log4k>) {
         self.store = store
@@ -12,23 +13,59 @@ public struct Log4kView: View {
 
     @Query private var items: [Log4kItem] {
         didSet {
-            store.send(.queryChanged(self.items))
+            store.send(.queryChanged(items))
         }
     }
 
     public var body: some View {
         NavigationStack {
-            List(items) { item in
-                Text("\(item.date)")
+            List(items.sorted(by: { $0.date > $1.date })) { item in
+                Text(DateFormatter.dateFormatter.string(from: item.date))
+                    .swipeActions {
+                        Button("Delete", systemImage: "trash", role: .destructive) {
+                            context.delete(item)
+                        }
+                    }
             }
-            .refreshable {
-                store.send(.reload)
+            .sheet(
+                item: $store.scope(state: \.destination?.add, action: \.destination.add)
+            ) { store in
+                AddView(store: store)
+            }
+            .popover(
+                item: $store.scope(state: \.destination?.edit, action: \.destination.edit)
+            ) { store in
+                EditView(store: store)
+            }
+            .navigationDestination(
+                item: $store.scope(state: \.destination?.detail, action: \.destination.detail)
+            ) { store in
+                DetailView(store: store)
+            }
+            .toolbar {
+#if !os(macOS)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        store.send(.plusButtonTapped)
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+#else
+                ToolbarItem {
+                    Button {
+                        store.send(.plusButtonTapped)
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+#endif
             }
             .navigationTitle("Log4k")
         }
-        .onAppear {
-            store.send(.onAppear)
-        }
+        .alert(
+            $store.scope(state: \.alert, action: \.alert)
+        )
     }
 }
 
@@ -36,4 +73,5 @@ public struct Log4kView: View {
     Log4kView(store: Store(initialState: Log4k.State()) {
         Log4k()
     })
+    .modelContainer(for: [Log4kItem.self])
 }
