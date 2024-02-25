@@ -52,6 +52,7 @@ public struct AccountView: View {
                     }
                 }
             }
+            .formStyle(GroupedFormStyle())
             .navigationTitle("Account")
         }
         .alert($store.scope(state: \.alert, action: \.alert))

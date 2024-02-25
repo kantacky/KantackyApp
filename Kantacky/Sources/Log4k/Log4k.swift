@@ -19,10 +19,9 @@ public struct Log4k {
         @Presents var alert: AlertState<Action.Alert>?
         @Presents var destination: Destination.State?
         var items: IdentifiedArrayOf<Log4kItem> = []
+        var selection: Log4kItem?
 
-        public init() {
-            self.items = []
-        }
+        public init() {}
     }
 
     // MARK: - Action
@@ -32,6 +31,7 @@ public struct Log4k {
         case destination(PresentationAction<Destination.Action>)
         case plusButtonTapped
         case queryChanged([Log4kItem])
+        case selectionChanged(Log4kItem?)
 
         public enum Alert {}
     }
@@ -53,6 +53,18 @@ public struct Log4k {
             case .alert:
                 return .none
 
+            case .destination(.presented(.detail(.editButtonTapped))):
+                if case let .detail(detailState) = state.destination {
+                    state.destination = .edit(Edit.State(item: detailState.item))
+                }
+                return .none
+
+            case .destination(.presented(.edit(.onDisappear))):
+                if case let .edit(editState) = state.destination {
+                    state.destination = .detail(Detail.State(item: editState.item))
+                }
+                return .none
+
             case .destination:
                 return .none
 
@@ -62,6 +74,13 @@ public struct Log4k {
 
             case .queryChanged(let items):
                 state.items = IdentifiedArrayOf(uniqueElements: items)
+                return .none
+
+            case let .selectionChanged(item):
+                if let item {
+                    state.selection = item
+                    state.destination = .detail(Detail.State(item: item))
+                }
                 return .none
             }
         }

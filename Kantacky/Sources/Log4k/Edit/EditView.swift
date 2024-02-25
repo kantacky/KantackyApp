@@ -10,57 +10,77 @@ public struct EditView: View {
     }
 
     public var body: some View {
-        Form {
-            LabeledContent("Date") {
-                DatePicker(
-                    "Date",
-                    selection: $store.item.date,
-                    displayedComponents: [.date]
-                )
+        NavigationStack {
+            Form {
+                LabeledContent("Date") {
+                    DatePicker(
+                        "Date",
+                        selection: $store.item.date,
+                        displayedComponents: [.date]
+                    )
+                }
+
+                Section(header: Text("Evaluation")) {
+                    LabeledContent("Happy?") {
+                        HStack {
+                            Spacer()
+                            Text(store.item.happy.description)
+                            Slider(value: $store.item.happy, in: 0...5, step: 0.5)
+                                .containerRelativeFrame(.horizontal, count: 2, spacing: 0)
+                        }
+                    }
+
+                    LabeledContent("Satisfied?") {
+                        HStack {
+                            Spacer()
+                            Text(store.item.satisfied.description)
+                            Slider(value: $store.item.satisfied, in: 0...5, step: 0.5)
+                                .containerRelativeFrame(.horizontal, count: 2, spacing: 0)
+                        }
+                    }
+
+                    LabeledContent("Exhausted?") {
+                        HStack {
+                            Spacer()
+                            Text(store.item.exhausted.description)
+                            Slider(value: $store.item.exhausted, in: 0...5, step: 0.5)
+                                .containerRelativeFrame(.horizontal, count: 2, spacing: 0)
+                        }
+                    }
+                }
             }
-
-            Section(header: Text("Evaluation")) {
-                LabeledContent("Happy?") {
-                    Slider(value: $store.item.evaluation.happy, in: 0...10, step: 1)
+            .navigationTitle(DateFormatter.dateFormatter.string(from: store.item.date))
+#if !os(macOS)
+            .navigationBarTitleDisplayMode(.inline)
+#endif
+            .toolbar {
+#if !os(macOS)
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        store.send(.cancelButtonTapped)
+                    }
                 }
-
-                LabeledContent("Satisfied?") {
-                    Slider(value: $store.item.evaluation.satisfied, in: 0...10, step: 1)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        store.send(.saveButtonTapped)
+                    }
                 }
-
-                LabeledContent("Exhausted?") {
-                    Slider(value: $store.item.evaluation.exhausted, in: 0...10, step: 1)
+#else
+                ToolbarItem {
+                    Button("Cancel") {
+                        store.send(.cancelButtonTapped)
+                    }
                 }
+                ToolbarItem {
+                    Button("Save") {
+                        store.send(.saveButtonTapped)
+                    }
+                }
+#endif
             }
         }
-        .navigationTitle("New Log4k")
-#if !os(macOS)
-        .navigationBarTitleDisplayMode(.inline)
-#endif
-        .toolbar {
-#if !os(macOS)
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel") {
-                    store.send(.cancelButtonTapped)
-                }
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Save") {
-                    store.send(.saveButtonTapped)
-                }
-            }
-#else
-            ToolbarItem {
-                Button("Cancel") {
-                    store.send(.cancelButtonTapped)
-                }
-            }
-            ToolbarItem {
-                Button("Save") {
-                    store.send(.saveButtonTapped)
-                }
-            }
-#endif
+        .onDisappear {
+            store.send(.onDisappear)
         }
     }
 }
@@ -69,11 +89,9 @@ public struct EditView: View {
     EditView(store: Store(initialState: Edit.State(
         item: Log4kItem(
             date: .today,
-            evaluation: Log4kEvaluation(
-                happy: 5,
-                satisfied: 5,
-                exhausted: 5
-            ),
+            happy: 5,
+            satisfied: 5,
+            exhausted: 5,
             events: []
         )
     )) {

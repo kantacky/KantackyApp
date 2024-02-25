@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import Data
 import Dependencies
+import SwiftDataClient
 
 @Reducer
 public struct Edit {
@@ -19,10 +20,12 @@ public struct Edit {
         case binding(BindingAction<State>)
         case cancelButtonTapped
         case saveButtonTapped
+        case onDisappear
     }
 
     // MARK: - Dependencies
     @Dependency(\.dismiss) private var dismiss
+    @Dependency(SwiftDataClient.self) private var swiftDataClient
 
     public init() {}
 
@@ -34,11 +37,21 @@ public struct Edit {
                 return .none
 
             case .cancelButtonTapped:
-                return .run { _ in
+                return .run { send in
+                    await send(.onDisappear)
                     await dismiss()
                 }
 
             case .saveButtonTapped:
+                return .run { [item = state.item] send in
+                    await send(.onDisappear)
+                    Task { @MainActor in
+                        swiftDataClient.container.mainContext.insert(item)
+                        await dismiss()
+                    }
+                }
+
+            case .onDisappear:
                 return .none
             }
         }

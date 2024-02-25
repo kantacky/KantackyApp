@@ -1,6 +1,8 @@
 import ComposableArchitecture
 import Data
+import Dependencies
 import SwiftData
+import SwiftDataClient
 import SwiftUI
 
 public struct Log4kView: View {
@@ -18,50 +20,46 @@ public struct Log4kView: View {
     }
 
     public var body: some View {
-        NavigationStack {
-            List(items.sorted(by: { $0.date > $1.date })) { item in
-                Text(DateFormatter.dateFormatter.string(from: item.date))
-                    .swipeActions {
-                        Button("Delete", systemImage: "trash", role: .destructive) {
-                            context.delete(item)
-                        }
+        NavigationSplitView {
+            List(
+                items.sorted(by: { $0.date > $1.date }),
+                selection: $store.selection.sending(\.selectionChanged)
+            ) { item in
+                NavigationLink(
+                    DateFormatter.dateFormatter.string(from: item.date),
+                    value: item
+                )
+                .swipeActions {
+                    Button("Delete", systemImage: "trash", role: .destructive) {
+                        context.delete(item)
                     }
+                }
             }
-            .sheet(
-                item: $store.scope(state: \.destination?.add, action: \.destination.add)
-            ) { store in
-                AddView(store: store)
-            }
-            .popover(
-                item: $store.scope(state: \.destination?.edit, action: \.destination.edit)
-            ) { store in
-                EditView(store: store)
-            }
+#if os(macOS)
+            .frame(minWidth: 200)
+#endif
+            .modifier(Log4kToolbar(store: store))
             .navigationDestination(
                 item: $store.scope(state: \.destination?.detail, action: \.destination.detail)
             ) { store in
                 DetailView(store: store)
             }
-            .toolbar {
-#if !os(macOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        store.send(.plusButtonTapped)
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-#else
-                ToolbarItem {
-                    Button {
-                        store.send(.plusButtonTapped)
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                }
-#endif
-            }
             .navigationTitle("Log4k")
+        } detail: {
+            Text("Select an Item")
+#if os(macOS)
+                .frame(minWidth: 600, minHeight: 600)
+#endif
+        }
+        .sheet(
+            item: $store.scope(state: \.destination?.add, action: \.destination.add)
+        ) { store in
+            AddView(store: store)
+        }
+        .popover(
+            item: $store.scope(state: \.destination?.edit, action: \.destination.edit)
+        ) { store in
+            EditView(store: store)
         }
         .alert(
             $store.scope(state: \.alert, action: \.alert)
@@ -70,8 +68,10 @@ public struct Log4kView: View {
 }
 
 #Preview {
-    Log4kView(store: Store(initialState: Log4k.State()) {
+    @Dependency(SwiftDataClient.self) var swiftDataClient
+
+    return Log4kView(store: Store(initialState: Log4k.State()) {
         Log4k()
     })
-    .modelContainer(for: [Log4kItem.self])
+    .modelContainer(swiftDataClient.container)
 }

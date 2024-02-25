@@ -17,15 +17,15 @@ public struct DetailView: View {
 
             Section(header: Text("Evaluation")) {
                 LabeledContent("Happy?") {
-                    Text(store.item.evaluation.happy.description)
+                    Text(store.item.happy.description)
                 }
 
                 LabeledContent("Satisfied?") {
-                    Text(store.item.evaluation.satisfied.description)
+                    Text(store.item.satisfied.description)
                 }
 
                 LabeledContent("Exhausted?") {
-                    Text(store.item.evaluation.exhausted.description)
+                    Text(store.item.exhausted.description)
                 }
             }
         }
@@ -56,11 +56,9 @@ public struct DetailView: View {
         initialState: Detail.State(
             item: Log4kItem(
                 date: .today,
-                evaluation: Log4kEvaluation(
-                    happy: 5,
-                    satisfied: 5,
-                    exhausted: 5
-                ),
+                happy: 5,
+                satisfied: 5,
+                exhausted: 5,
                 events: []
             )
         )
