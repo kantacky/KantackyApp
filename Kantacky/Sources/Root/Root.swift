@@ -1,6 +1,6 @@
 import ComposableArchitecture
 import Core
-import Data
+import KantackyEntity
 import Launch
 import SignIn
 
@@ -32,9 +32,7 @@ public struct Root {
 
     // MARK: - Reducer
     public var body: some ReducerOf<Self> {
-        Scope(state: \.scene, action: \.scene) {
-            Scene.body
-        }
+        Scope(state: \.scene, action: \.scene) { Scene.body }
 
         Reduce { state, action in
             switch action {

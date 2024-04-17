@@ -3,19 +3,11 @@ import Dependencies
 import Foundation
 
 extension Auth0Client: DependencyKey {
-    public static let liveValue: Self = .init(
-        signIn: {
-            try await signIn()
-        },
-        signOut: {
-            try await signOut()
-        },
-        getCredentials: {
-            try await getCredentials()
-        },
-        renewCredentials: {
-            try await renewCredentials()
-        }
+    public static let liveValue = Auth0Client(
+        signIn: { try await signIn() },
+        signOut: { try await signOut() },
+        getCredentials: { try await getCredentials() },
+        renewCredentials: { try await renewCredentials() }
     )
 
     private static let path: String = Bundle.module.path(forResource: "Auth0", ofType: "plist")!
@@ -74,4 +66,9 @@ extension Auth0Client: DependencyKey {
 
         return credentials
     }
+}
+
+extension Auth0Client: TestDependencyKey {
+    public static let testValue = Auth0Client()
+    public static let previewValue = Auth0Client()
 }

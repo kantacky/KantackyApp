@@ -1,7 +1,7 @@
 import Auth0
 import Auth0Client
 import ComposableArchitecture
-import Data
+import KantackyEntity
 
 @Reducer
 public struct Launch {

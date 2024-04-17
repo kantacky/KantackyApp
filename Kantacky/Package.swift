@@ -1,23 +1,16 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 
 import PackageDescription
 
 let package = Package(
     name: "Kantacky",
     defaultLocalization: "en",
-    platforms: [
-        .iOS(.v17),
-        .macOS(.v14),
-        .watchOS(.v10),
-        .tvOS(.v17),
-        .visionOS(.v1),
-    ],
+    platforms: [.iOS(.v17)],
     products: [
         .library(name: "Account", targets: ["Account"]),
         .library(name: "Core", targets: ["Core"]),
         .library(name: "Kantacky", targets: ["Kantacky"]),
         .library(name: "Launch", targets: ["Launch"]),
-        .library(name: "Log4k", targets: ["Log4k"]),
         .library(name: "Root", targets: ["Root"]),
         .library(name: "SignIn", targets: ["SignIn"]),
     ],
@@ -33,8 +26,7 @@ let package = Package(
             dependencies: [
                 .auth0Client,
                 .composableArchitecture,
-                .data,
-                .dependencies,
+                .kantackyEntity,
                 .nukeUI,
                 .resources,
             ]
@@ -51,6 +43,7 @@ let package = Package(
             dependencies: [
                 .auth0,
                 .dependencies,
+                .dependenciesMacros,
             ],
             resources: [
                 .process("./Auth0.plist"),
@@ -61,10 +54,7 @@ let package = Package(
             dependencies: [
                 .account,
                 .composableArchitecture,
-                .dependencies,
-                .data,
-                .log4k,
-                .swiftDataClient
+                .kantackyEntity,
             ]
         ),
         .testTarget(
@@ -72,12 +62,6 @@ let package = Package(
             dependencies: [
                 .composableArchitecture,
                 .core,
-            ]
-        ),
-        .target(
-            name: "Data",
-            dependencies: [
-                .auth0,
             ]
         ),
         .target(
@@ -95,12 +79,18 @@ let package = Package(
             ]
         ),
         .target(
+            name: "KantackyEntity",
+            dependencies: [
+                .auth0,
+            ]
+        ),
+        .target(
             name: "Launch",
             dependencies: [
                 .auth0,
                 .auth0Client,
                 .composableArchitecture,
-                .data,
+                .kantackyEntity,
                 .resources,
             ]
         ),
@@ -111,29 +101,13 @@ let package = Package(
                 .launch,
             ]
         ),
-        .target(
-            name: "Log4k",
-            dependencies: [
-                .composableArchitecture,
-                .data,
-                .dependencies,
-                .swiftDataClient,
-            ]
-        ),
-        .testTarget(
-            name: "Log4kTests",
-            dependencies: [
-                .composableArchitecture,
-                .log4k,
-            ]
-        ),
         .target(name: "Resources"),
         .target(
             name: "Root",
             dependencies: [
                 .composableArchitecture,
                 .core,
-                .data,
+                .kantackyEntity,
                 .launch,
                 .signIn
             ]
@@ -150,8 +124,7 @@ let package = Package(
             dependencies: [
                 .auth0Client,
                 .composableArchitecture,
-                .data,
-                .dependencies,
+                .kantackyEntity,
                 .resources,
             ]
         ),
@@ -162,19 +135,6 @@ let package = Package(
                 .signIn,
             ]
         ),
-        .target(
-            name: "SwiftDataClient",
-            dependencies: [
-                .data,
-                .dependencies,
-            ]
-        ),
-        .target(
-            name: "UserDefaultsClient",
-            dependencies: [
-                .dependencies,
-            ]
-        )
     ]
 )
 
@@ -182,19 +142,16 @@ extension Target.Dependency {
     static let account: Self = "Account"
     static let auth0Client: Self = "Auth0Client"
     static let core: Self = "Core"
-    static let data: Self = "Data"
-    static let generativeAIClient: Self = "GenerativeAIClient"
     static let kantacky: Self = "Kantacky"
+    static let kantackyEntity: Self = "KantackyEntity"
     static let launch: Self = "Launch"
-    static let log4k: Self = "Log4k"
     static let resources: Self = "Resources"
     static let root: Self = "Root"
     static let signIn: Self = "SignIn"
-    static let swiftDataClient: Self = "SwiftDataClient"
-    static let userDefaultsClient: Self = "UserDefaultsClient"
 
     static let auth0: Self = .product(name: "Auth0", package: "Auth0.swift")
     static let composableArchitecture: Self = .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
     static let dependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
+    static let dependenciesMacros: Self = .product(name: "DependenciesMacros", package: "swift-dependencies")
     static let nukeUI: Self = .product(name: "NukeUI", package: "Nuke")
 }

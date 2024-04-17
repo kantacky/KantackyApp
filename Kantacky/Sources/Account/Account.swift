@@ -1,7 +1,6 @@
 import Auth0Client
 import ComposableArchitecture
-import Data
-import Dependencies
+import KantackyEntity
 
 @Reducer
 public struct Account {
