@@ -28,10 +28,14 @@ public struct Launch {
             switch action {
             case .onAppear:
                 return .run { send in
-                    await send(.validateUser(Result {
-                        let credentials = try await self.auth0Client.getCredentials()
-                        return try User.from(credentials)
-                    }))
+                    await send(
+                        .validateUser(
+                            Result {
+                                let credentials = try await self.auth0Client.getCredentials()
+                                return try User.from(credentials)
+                            }
+                        )
+                    )
                 }
 
             case .validateUser(.success(_)):

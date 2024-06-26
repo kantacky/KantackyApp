@@ -24,7 +24,9 @@ public struct LaunchView: View {
 }
 
 #Preview {
-    LaunchView(store: Store(initialState: Launch.State()) {
-        Launch()
-    })
+    LaunchView(
+        store: Store(initialState: Launch.State()) {
+            Launch()
+        }
+    )
 }

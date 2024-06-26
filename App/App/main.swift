@@ -1,3 +1,0 @@
-import Kantacky
-
-AppRoot.main()

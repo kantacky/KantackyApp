@@ -2,7 +2,7 @@ import ComposableArchitecture
 import Root
 import SwiftUI
 
-public struct AppRoot: App {
+public struct KantackyApp: App {
     private let store: StoreOf<Root>
 
     public init() {

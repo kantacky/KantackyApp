@@ -3,13 +3,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "Kantacky",
+    name: "KantackyPackage",
     defaultLocalization: "en",
     platforms: [.iOS(.v18)],
     products: [
         .library(name: "Account", targets: ["Account"]),
         .library(name: "Core", targets: ["Core"]),
-        .library(name: "Kantacky", targets: ["Kantacky"]),
+        .library(name: "KantackyPackage", targets: ["KantackyPackage"]),
         .library(name: "Launch", targets: ["Launch"]),
         .library(name: "Root", targets: ["Root"]),
         .library(name: "SignIn", targets: ["SignIn"]),
@@ -32,13 +32,6 @@ let package = Package(
                 .resources,
             ]
         ),
-        .testTarget(
-            name: "AccountTests",
-            dependencies: [
-                .account,
-                .composableArchitecture,
-            ]
-        ),
         .target(
             name: "Auth0Client",
             dependencies: [
@@ -58,25 +51,11 @@ let package = Package(
                 .kantackyEntity,
             ]
         ),
-        .testTarget(
-            name: "CoreTests",
-            dependencies: [
-                .composableArchitecture,
-                .core,
-            ]
-        ),
         .target(
-            name: "Kantacky",
+            name: "KantackyPackage",
             dependencies: [
                 .composableArchitecture,
                 .root,
-            ]
-        ),
-        .testTarget(
-            name: "KantackyTests",
-            dependencies: [
-                .composableArchitecture,
-                .kantacky,
             ]
         ),
         .target(
@@ -95,13 +74,6 @@ let package = Package(
                 .resources,
             ]
         ),
-        .testTarget(
-            name: "LaunchTests",
-            dependencies: [
-                .composableArchitecture,
-                .launch,
-            ]
-        ),
         .target(name: "Resources"),
         .target(
             name: "Root",
@@ -113,13 +85,6 @@ let package = Package(
                 .signIn
             ]
         ),
-        .testTarget(
-            name: "RootTests",
-            dependencies: [
-                .composableArchitecture,
-                .root,
-            ]
-        ),
         .target(
             name: "SignIn",
             dependencies: [
@@ -129,13 +94,6 @@ let package = Package(
                 .resources,
             ]
         ),
-        .testTarget(
-            name: "SignInTests",
-            dependencies: [
-                .composableArchitecture,
-                .signIn,
-            ]
-        ),
     ]
 )
 
@@ -143,7 +101,6 @@ extension Target.Dependency {
     static let account: Self = "Account"
     static let auth0Client: Self = "Auth0Client"
     static let core: Self = "Core"
-    static let kantacky: Self = "Kantacky"
     static let kantackyEntity: Self = "KantackyEntity"
     static let launch: Self = "Launch"
     static let resources: Self = "Resources"

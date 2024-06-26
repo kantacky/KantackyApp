@@ -1,8 +1,8 @@
 import Auth0
 import Auth0Client
 import ComposableArchitecture
-import KantackyEntity
 import JWTDecode
+import KantackyEntity
 
 @Reducer
 public struct SignIn {
@@ -26,7 +26,7 @@ public struct SignIn {
     }
 
     // MARK: - Dependencies
-    @Dependency (Auth0Client.self) private var auth0Client: Auth0Client
+    @Dependency(Auth0Client.self) private var auth0Client: Auth0Client
 
     public init() {}
 
@@ -47,10 +47,14 @@ public struct SignIn {
 
             case .continueButtonTapped:
                 return .run { send in
-                    await send(.signIn(Result {
-                        let credentials = try await self.auth0Client.signIn()
-                        return try User.from(credentials)
-                    }))
+                    await send(
+                        .signIn(
+                            Result {
+                                let credentials = try await self.auth0Client.signIn()
+                                return try User.from(credentials)
+                            }
+                        )
+                    )
                 }
 
             case .signIn(.success(_)):

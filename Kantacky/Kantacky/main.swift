@@ -1,0 +1,3 @@
+import KantackyPackage
+
+KantackyApp.main()

@@ -21,11 +21,13 @@ public struct AccountView: View {
                                     .scaledToFit()
                                     .frame(width: 48)
                                     .clipShape(Circle())
-                            } else if state.error != nil {
+                            }
+                            else if state.error != nil {
                                 Circle()
                                     .fill(Color.gray)
                                     .frame(width: 48, height: 48)
-                            } else {
+                            }
+                            else {
                                 Circle()
                                     .fill(Color.gray)
                                     .frame(width: 48, height: 48)
@@ -60,9 +62,11 @@ public struct AccountView: View {
 }
 
 #Preview {
-    AccountView(store: Store(
-        initialState: Account.State(user: .example0)
-    ) {
-        Account()
-    })
+    AccountView(
+        store: Store(
+            initialState: Account.State(user: .example0)
+        ) {
+            Account()
+        }
+    )
 }

@@ -44,9 +44,13 @@ public struct Account {
 
             case .signOutButtonTapped:
                 return .run { send in
-                    await send(.signOut(Result {
-                        try await self.auth0Client.signOut()
-                    }))
+                    await send(
+                        .signOut(
+                            Result {
+                                try await self.auth0Client.signOut()
+                            }
+                        )
+                    )
                 }
 
             case .signOut(.success):

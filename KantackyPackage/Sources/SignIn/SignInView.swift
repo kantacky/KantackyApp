@@ -36,9 +36,11 @@ public struct SignInView: View {
 }
 
 #Preview {
-    SignInView(store: Store(
-        initialState: SignIn.State()
-    ) {
-        SignIn()
-    })
+    SignInView(
+        store: Store(
+            initialState: SignIn.State()
+        ) {
+            SignIn()
+        }
+    )
 }

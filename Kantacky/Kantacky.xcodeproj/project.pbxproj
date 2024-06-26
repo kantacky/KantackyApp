@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F151850A2B88DA6B00BB1BBF /* Kantacky in Frameworks */ = {isa = PBXBuildFile; productRef = F15185092B88DA6B00BB1BBF /* Kantacky */; };
+		F13BF34D2C2BF06200F538C4 /* KantackyPackage in Frameworks */ = {isa = PBXBuildFile; productRef = F13BF34C2C2BF06200F538C4 /* KantackyPackage */; };
 		F1CBA9122B411D06006AAFF2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CBA9112B411D06006AAFF2 /* main.swift */; };
 		F1CBA9162B411D07006AAFF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1CBA9152B411D07006AAFF2 /* Assets.xcassets */; };
 		F1CBA9192B411D07006AAFF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1CBA9182B411D07006AAFF2 /* Preview Assets.xcassets */; };
@@ -15,8 +15,8 @@
 
 /* Begin PBXFileReference section */
 		F12AE1412B413C0A00FAF380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		F12AE1422B41480900FAF380 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
-		F1CBA90E2B411D06006AAFF2 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F12AE1422B41480900FAF380 /* Kantacky.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kantacky.entitlements; sourceTree = "<group>"; };
+		F1CBA90E2B411D06006AAFF2 /* Kantacky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kantacky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1CBA9112B411D06006AAFF2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F1CBA9152B411D07006AAFF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F1CBA9182B411D07006AAFF2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F151850A2B88DA6B00BB1BBF /* Kantacky in Frameworks */,
+				F13BF34D2C2BF06200F538C4 /* KantackyPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,7 +37,7 @@
 		F1CBA9052B411D06006AAFF2 = {
 			isa = PBXGroup;
 			children = (
-				F1CBA9102B411D06006AAFF2 /* App */,
+				F1CBA9102B411D06006AAFF2 /* Kantacky */,
 				F1CBA90F2B411D06006AAFF2 /* Products */,
 				F1CBA91F2B411D21006AAFF2 /* Frameworks */,
 			);
@@ -46,21 +46,21 @@
 		F1CBA90F2B411D06006AAFF2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F1CBA90E2B411D06006AAFF2 /* App.app */,
+				F1CBA90E2B411D06006AAFF2 /* Kantacky.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F1CBA9102B411D06006AAFF2 /* App */ = {
+		F1CBA9102B411D06006AAFF2 /* Kantacky */ = {
 			isa = PBXGroup;
 			children = (
-				F12AE1422B41480900FAF380 /* App.entitlements */,
+				F12AE1422B41480900FAF380 /* Kantacky.entitlements */,
 				F12AE1412B413C0A00FAF380 /* Info.plist */,
 				F1CBA9112B411D06006AAFF2 /* main.swift */,
 				F1CBA9152B411D07006AAFF2 /* Assets.xcassets */,
 				F1CBA9172B411D07006AAFF2 /* Preview Content */,
 			);
-			path = App;
+			path = Kantacky;
 			sourceTree = "<group>";
 		};
 		F1CBA9172B411D07006AAFF2 /* Preview Content */ = {
@@ -81,9 +81,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F1CBA90D2B411D06006AAFF2 /* App */ = {
+		F1CBA90D2B411D06006AAFF2 /* Kantacky */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F1CBA91C2B411D07006AAFF2 /* Build configuration list for PBXNativeTarget "App" */;
+			buildConfigurationList = F1CBA91C2B411D07006AAFF2 /* Build configuration list for PBXNativeTarget "Kantacky" */;
 			buildPhases = (
 				F1CBA90A2B411D06006AAFF2 /* Sources */,
 				F1CBA90B2B411D06006AAFF2 /* Frameworks */,
@@ -93,12 +93,12 @@
 			);
 			dependencies = (
 			);
-			name = App;
+			name = Kantacky;
 			packageProductDependencies = (
-				F15185092B88DA6B00BB1BBF /* Kantacky */,
+				F13BF34C2C2BF06200F538C4 /* KantackyPackage */,
 			);
 			productName = Kantacky;
-			productReference = F1CBA90E2B411D06006AAFF2 /* App.app */;
+			productReference = F1CBA90E2B411D06006AAFF2 /* Kantacky.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -116,7 +116,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F1CBA9092B411D06006AAFF2 /* Build configuration list for PBXProject "App" */;
+			buildConfigurationList = F1CBA9092B411D06006AAFF2 /* Build configuration list for PBXProject "Kantacky" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -129,7 +129,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F1CBA90D2B411D06006AAFF2 /* App */,
+				F1CBA90D2B411D06006AAFF2 /* Kantacky */,
 			);
 		};
 /* End PBXProject section */
@@ -282,14 +282,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Kantacky/Kantacky.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Kantacky/Preview Content\"";
 				DEVELOPMENT_TEAM = 4YP7SQBLYV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_FILE = Kantacky/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kantacky;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -306,6 +307,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kantacky.Kantacky;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -323,14 +325,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Kantacky/Kantacky.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Kantacky/Preview Content\"";
 				DEVELOPMENT_TEAM = 4YP7SQBLYV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = App/Info.plist;
+				INFOPLIST_FILE = Kantacky/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kantacky;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -347,6 +350,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kantacky.Kantacky;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -362,7 +366,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F1CBA9092B411D06006AAFF2 /* Build configuration list for PBXProject "App" */ = {
+		F1CBA9092B411D06006AAFF2 /* Build configuration list for PBXProject "Kantacky" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F1CBA91A2B411D07006AAFF2 /* Debug */,
@@ -371,7 +375,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F1CBA91C2B411D07006AAFF2 /* Build configuration list for PBXNativeTarget "App" */ = {
+		F1CBA91C2B411D07006AAFF2 /* Build configuration list for PBXNativeTarget "Kantacky" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F1CBA91D2B411D07006AAFF2 /* Debug */,
@@ -383,9 +387,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F15185092B88DA6B00BB1BBF /* Kantacky */ = {
+		F13BF34C2C2BF06200F538C4 /* KantackyPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Kantacky;
+			productName = KantackyPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

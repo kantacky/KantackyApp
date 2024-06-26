@@ -26,7 +26,9 @@ public struct RootView: View {
 }
 
 #Preview {
-    RootView(store: Store(initialState: Root.State()) {
-        Root()
-    })
+    RootView(
+        store: Store(initialState: Root.State()) {
+            Root()
+        }
+    )
 }
