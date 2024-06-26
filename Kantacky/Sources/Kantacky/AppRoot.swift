@@ -14,9 +14,6 @@ public struct AppRoot: App {
     public var body: some Scene {
         WindowGroup {
             RootView(store: store)
-#if os(macOS)
-                .frame(minWidth: 800, minHeight: 600)
-#endif
         }
     }
 }

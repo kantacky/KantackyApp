@@ -12,13 +12,14 @@ public struct CoreView: View {
 
     public var body: some View {
         TabView {
-            AccountView(
-                store: store.scope(
-                    state: \.account,
-                    action: \.account
+            Tab {
+                AccountView(
+                    store: store.scope(
+                        state: \.account,
+                        action: \.account
+                    )
                 )
-            )
-            .tabItem {
+            } label: {
                 Label("Account", systemImage: "person.crop.circle")
             }
         }
@@ -26,7 +27,13 @@ public struct CoreView: View {
 }
 
 #Preview {
-    CoreView(store: Store(initialState: Core.State(
-        user: .example0
-    )) { Core() })
+    CoreView(
+        store: Store(
+            initialState: Core.State(
+                user: .example0
+            )
+        ) {
+            Core()
+        }
+    )
 }

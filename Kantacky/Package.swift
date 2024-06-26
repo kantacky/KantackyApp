@@ -1,11 +1,11 @@
-// swift-tools-version: 5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let package = Package(
     name: "Kantacky",
     defaultLocalization: "en",
-    platforms: [.iOS(.v17)],
+    platforms: [.iOS(.v18)],
     products: [
         .library(name: "Account", targets: ["Account"]),
         .library(name: "Core", targets: ["Core"]),
@@ -15,10 +15,11 @@ let package = Package(
         .library(name: "SignIn", targets: ["SignIn"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", .upToNextMajor(from: "1.0.0")),
-        .package(url: "https://github.com/auth0/Auth0.swift.git", .upToNextMajor(from: "2.0.0")),
-        .package(url: "https://github.com/kean/Nuke.git", .upToNextMajor(from: "12.0.0")),
+        .package(url: "https://github.com/auth0/Auth0.swift", .upToNextMajor(from: "2.0.0")),
+        .package(url: "https://github.com/kean/Nuke", .upToNextMajor(from: "12.0.0")),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/swiftlang/swift-format", .upToNextMajor(from: "510.0.0")),
     ],
     targets: [
         .target(
